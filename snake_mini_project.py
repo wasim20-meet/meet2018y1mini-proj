@@ -8,8 +8,8 @@ Date:
 """
 import turtle
 import random #We'll need this later in the lab
-
 turtle.tracer(1,0) #This helps the turtle move more smoothly
+
 
 SIZE_X=800
 SIZE_Y=500
@@ -113,8 +113,15 @@ turtle.onkeypress(left, LEFT_ARROW)
 turtle.onkeypress(right, RIGHT_ARROW)
 ##3. Do the same for the other arrow keys
 #####WRITE YOUR CODE HERE!!
-
 turtle.listen()
+
+turtle.register_shape("trash.gif") #Add trash picture
+                      # Make sure you have downloaded this shape 
+                      # from the Google Drive folder and saved it
+                      # in the same folder as this Python script
+food = turtle.clone()
+food.shape("trash.gif")
+
 def make_food():
     #The screen positions go from -SIZE/2 to +SIZE/2
     #But we need to make food pieces only appear on game squares
@@ -128,22 +135,12 @@ def make_food():
     food_x = random.randint(min_x,max_x)*SQUARE_SIZE
     food_y = random.randint(min_y,max_y)*SQUARE_SIZE
 
-        ##1.WRITE YOUR CODE HERE: Make the food turtle go to the randomly-generated
-        ##                        position 
-        ##2.WRITE YOUR CODE HERE: Add the food turtle's position to the food positions list
-        ##3.WRITE YOUR CODE HERE: Add the food turtle's stamp to the food stamps list
-"""
+    food.goto(food_x,food_y)    
+                                 
+    food_pos.append(food.pos)          
+    food_stamp=food.stamp()
+    food_stamps.append(food_stamp)
 
-
-
-
-TO DO
-
-
-
-
-
-"""
 
 def move_snake():
     my_pos = snake.pos()
@@ -203,7 +200,9 @@ def move_snake():
         food_pos.pop(food_ind) #Remove eaten food position
         food_stamps.pop(food_ind) #Remove eaten food stamp
         print("You have eaten the food!")
-    
+
+    if len(food_stamps) <= 6 :
+        make_food()
     #HINT: This if statement may be useful for Part 8
 
     ...
@@ -218,18 +217,17 @@ def move_snake():
     snake.clearstamp(old_stamp)
     pos_list.pop(0)
 
+    if len(food_stamps) <= 6 :
+        #print("food")
+        make_food()
+
     
     turtle.ontimer(move_snake,TIME_STEP)
 
 move_snake()
 
-turtle.register_shape("trash.gif") #Add trash picture
-                      # Make sure you have downloaded this shape 
-                      # from the Google Drive folder and saved it
-                      # in the same folder as this Python script
 
-food = turtle.clone()
-food.shape("trash.gif") 
+
 
 #Locations of food
 food_pos = [(100,100), (-100,100), (-100,-100), (100,-100)]
@@ -240,3 +238,5 @@ for this_food_pos in food_pos :
     food_stamp= food.stamp()
     food_stamps.append(food_stamp)
     x=x+1
+
+turtle.mainloop()
