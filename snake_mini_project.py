@@ -9,7 +9,7 @@ Date:
 import turtle
 import random #We'll need this later in the lab
 turtle.tracer(1,0) #This helps the turtle move more smoothly
-
+turtle.bgcolor("black")
 
 SIZE_X=800
 SIZE_Y=500
@@ -135,9 +135,8 @@ def make_food():
     food_x = random.randint(min_x,max_x)*SQUARE_SIZE
     food_y = random.randint(min_y,max_y)*SQUARE_SIZE
 
-    food.goto(food_x,food_y)    
-                                 
-    food_pos.append(food.pos)          
+    food.goto(food_x,food_y)                                
+    food_pos.append((food_x, food_y))          
     food_stamp=food.stamp()
     food_stamps.append(food_stamp)
 
@@ -179,7 +178,10 @@ def move_snake():
     elif new_y_pos <= DOWN_EDGE:
         print("You are stupid")
         quit()
-
+    
+    if snake.pos() in pos_list:
+          quit()
+    
 #    #4. Write the conditions for UP and DOWN on your own
 #    ##### YOUR CODE HERE
 #
@@ -197,15 +199,22 @@ def move_snake():
         food_ind=food_pos.index(snake.pos()) #What does this do?
         food.clearstamp(food_stamps[food_ind]) #Remove eaten food                 
                                                #stamp
+        
+        pos_list.append(1) 
+           
+        SNAKE = snake.stamp()
+        stamp_list.append(SNAKE)
+        
         food_pos.pop(food_ind) #Remove eaten food position
         food_stamps.pop(food_ind) #Remove eaten food stamp
         print("You have eaten the food!")
 
-    if len(food_stamps) <= 6 :
-        make_food()
+        
+
     #HINT: This if statement may be useful for Part 8
 
     ...
+
     #Don't change the rest of the code in move_snake() function:
     #If you have included the timer so the snake moves 
     #automatically, the function should finish as before with a 
@@ -228,15 +237,20 @@ move_snake()
 
 
 
+snake.color("white")
 
 #Locations of food
 food_pos = [(100,100), (-100,100), (-100,-100), (100,-100)]
 food_stamps = []
-x=0
+x= 0
 for this_food_pos in food_pos :
     food.goto(food_pos[x])
     food_stamp= food.stamp()
     food_stamps.append(food_stamp)
     x=x+1
-
 turtle.mainloop()
+
+        
+
+
+    
