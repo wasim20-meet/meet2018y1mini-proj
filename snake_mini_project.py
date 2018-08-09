@@ -10,21 +10,43 @@ import turtle
 import random #We'll need this later in the lab
 turtle.tracer(1,0) #This helps the turtle move more smoothly
 turtle.bgcolor("black")
-
+scores=turtle.clone()
+scores.hideturtle()
+line=turtle.clone()
+line.speed(0)
+turtle.hideturtle()
+line.pencolor("white")
+line.penup()
+line.goto(-390,250)
+line.pendown()
+line.goto(390,250)
+line.goto(390,-250)
+line.goto(-390,-250)
+line.goto(-390,250)
+line.hideturtle()
+line.penup()
+line.goto(0,400)
+line.pendown()
+line.write("Snake Game!!!", align = "center", font = ("Arial",20,"normal"))
+line.penup()
 SIZE_X=800
 SIZE_Y=500
-turtle.setup(SIZE_X, SIZE_Y) #Curious? It's the turtle window  
-                             #size. 
+turtle.setup(1000,1000)  
 turtle.penup()
-
+scores.penup()
+scores.pencolor("white")
+scores.goto(0,-400)
 SQUARE_SIZE = 20
 START_LENGTH = 6
-
+score=0
 #Initialize lists
 pos_list = []
 stamp_list = []
 food_pos = []
 food_stamps = []
+turtle.register_shape("yea.gif")
+turtle.register_shape("chick.gif")
+
 
 #Set up positions (x,y) of boxes that make up the snake
 snake= turtle.clone()
@@ -120,7 +142,7 @@ turtle.register_shape("trash.gif") #Add trash picture
                       # from the Google Drive folder and saved it
                       # in the same folder as this Python script
 food = turtle.clone()
-food.shape("trash.gif")
+food.shape("chick.gif")
 
 def make_food():
     #The screen positions go from -SIZE/2 to +SIZE/2
@@ -193,7 +215,7 @@ def move_snake():
     new_stamp = snake.stamp()
     stamp_list.append(new_stamp)
     ######## SPECIAL PLACE - Remember it for Part 5
-    global food_stamps, food_pos
+    global food_stamps, food_pos, score
     #If snake is on top of food item
     if snake.pos() in food_pos:
         food_ind=food_pos.index(snake.pos()) #What does this do?
@@ -208,7 +230,11 @@ def move_snake():
         food_pos.pop(food_ind) #Remove eaten food position
         food_stamps.pop(food_ind) #Remove eaten food stamp
         print("You have eaten the food!")
-
+        score=score+10
+        print(score)
+        scores.pendown()
+        scores.clear()
+        scores.write((score), align= "center", font=("arial", 18, "normal"))
         
 
     #HINT: This if statement may be useful for Part 8
@@ -237,8 +263,8 @@ move_snake()
 
 
 
-snake.color("white")
 
+snake.shape("yea.gif")
 #Locations of food
 food_pos = [(100,100), (-100,100), (-100,-100), (100,-100)]
 food_stamps = []
