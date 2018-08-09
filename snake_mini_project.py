@@ -10,6 +10,7 @@ import turtle
 import random #We'll need this later in the lab
 turtle.tracer(1,0) #This helps the turtle move more smoothly
 turtle.bgcolor("black")
+####
 scores=turtle.clone()
 scores.hideturtle()
 line=turtle.clone()
@@ -29,6 +30,7 @@ line.goto(0,400)
 line.pendown()
 line.write("Snake Game!!!", align = "center", font = ("Arial",20,"normal"))
 line.penup()
+#######
 SIZE_X=800
 SIZE_Y=500
 turtle.setup(1000,1000)  
@@ -44,13 +46,10 @@ pos_list = []
 stamp_list = []
 food_pos = []
 food_stamps = []
-turtle.register_shape("yea.gif")
-turtle.register_shape("chick.gif")
 
 
 #Set up positions (x,y) of boxes that make up the snake
 snake= turtle.clone()
-snake.shape("square")
 
 #Hide the turtle object (it's an arrow - we don't need to see it)
 turtle.hideturtle()
@@ -132,6 +131,7 @@ def down():
 turtle.onkeypress(up, UP_ARROW) # Create listener for up key
 turtle.onkeypress(down, DOWN_ARROW)
 turtle.onkeypress(left, LEFT_ARROW)
+
 turtle.onkeypress(right, RIGHT_ARROW)
 ##3. Do the same for the other arrow keys
 #####WRITE YOUR CODE HERE!!
@@ -142,7 +142,8 @@ turtle.register_shape("trash.gif") #Add trash picture
                       # from the Google Drive folder and saved it
                       # in the same folder as this Python script
 food = turtle.clone()
-food.shape("chick.gif")
+food.shape("trash.gif")
+snake.color("white")
 
 def make_food():
     #The screen positions go from -SIZE/2 to +SIZE/2
@@ -255,8 +256,7 @@ def move_snake():
     if len(food_stamps) <= 6 :
         #print("food")
         make_food()
-
-    
+        
     turtle.ontimer(move_snake,TIME_STEP)
 
 move_snake()
@@ -264,19 +264,18 @@ move_snake()
 
 
 
-snake.shape("yea.gif")
+snake.shape("square")
 #Locations of food
 food_pos = [(100,100), (-100,100), (-100,-100), (100,-100)]
 food_stamps = []
 x= 0
 for this_food_pos in food_pos :
     food.goto(food_pos[x])
+
     food_stamp= food.stamp()
     food_stamps.append(food_stamp)
     x=x+1
 turtle.mainloop()
-
-        
 
 
     
